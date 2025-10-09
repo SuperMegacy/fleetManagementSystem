@@ -26,3 +26,9 @@ yarn-error.log*
 
 # OS
 .DS_Store
+
+# TypeScript
+*.tsbuildinfo
+
+# Tailwind / PostCSS cache
+.pnp.*
