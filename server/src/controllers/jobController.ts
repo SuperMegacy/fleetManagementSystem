@@ -52,5 +52,47 @@ export const jobController = {
         } catch (error) {
             res.status(500).json({ error: 'Internal server error'})
         }
-    }
+    },
+
+    async getJobById(req: Request, res: Response) {
+        try {
+            const { jobId } = req.params;
+            const job = await JobModel.findById(jobId);
+            if (!job) return res.status(404).json({ error: "Job not found" });
+            res.json(job);
+        } catch (error) {
+            res.status(500).json({ error: "Internal server error" });
+        }
+    },
+
+        async updateJobStatus(req: Request, res: Response) {
+            try {
+                const { jobId } = req.params;
+                const { status } = req.body;
+                const updated = await JobModel.updateStatus(jobId, status);
+                res.json(updated);
+            } catch (error) {
+                res.status(500).json({ error: "Failed to update job status" });
+            }
+        },
+
+        async assignDriver(req: Request, res: Response) {
+            res.json({ message: "Driver assigned (mock)" });
+        },
+
+        async assignVehicle(req: Request, res: Response) {
+            res.json({ message: "Vehicle assigned (mock)" });
+        },
+
+        async getDrivers(req: Request, res: Response) {
+            res.json([{ id: 1, name: "John Doe" }]);
+        },
+
+        async getVehicles(req: Request, res: Response) {
+            res.json([{ id: 1, type: "Truck" }]);
+        },
+
+        async getClients(req: Request, res: Response) {
+            res.json([{ id: 1, name: "Acme Corp" }]);
+        }
 }

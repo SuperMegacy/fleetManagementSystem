@@ -1,15 +1,20 @@
-import { Router  } from "express";
-import { jobController } from "../controllers/jobController";
+import { Router } from 'express';
+import { jobController } from '../controllers/jobController';
 
 const router = Router();
 
-// Get /api/jobs?date=2023-10-15
+// Job routes
 router.get('/', jobController.getJobsByDate);
-
-// POST /api/jobs
 router.post('/', jobController.createJob);
-
-// GET /api/jobs/all (for debugging)
 router.get('/all', jobController.getAllJobs);
+router.get('/:jobId', jobController.getJobById);
+router.patch('/:jobId/status', jobController.updateJobStatus);
+router.patch('/:jobId/assign-driver', jobController.assignDriver);
+router.patch('/:jobId/assign-vehicle', jobController.assignVehicle);
+
+// Resource routes
+router.get('/resource/drivers', jobController.getDrivers);
+router.get('/resource/vehicles', jobController.getVehicles);
+router.get('/resource/clients', jobController.getClients);
 
 export default router;
