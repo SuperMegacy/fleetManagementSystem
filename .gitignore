@@ -32,3 +32,6 @@ yarn-error.log*
 
 # Tailwind / PostCSS cache
 .pnp.*
+
+.vite/
+
