@@ -10,16 +10,32 @@ const Dashboard: React.FC = () => {
   ];
 
   const recentJobs = [
-    { id: '1', clientName: 'ABC Corp', time: '09:00', status: 'in-progress' },
-    { id: '2', clientName: 'XYZ Ltd', time: '10:30', status: 'scheduled' },
-    { id: '3', clientName: 'Global Inc', time: '14:15', status: 'scheduled' },
+    { 
+      id: '1', 
+      client: { name: 'ABC Corp' }, 
+      pickupTime: '09:00', 
+      status: 'IN_PROGRESS' as const 
+    },
+    { 
+      id: '2', 
+      client: { name: 'XYZ Ltd' }, 
+      pickupTime: '10:30', 
+      status: 'SCHEDULED' as const 
+    },
+    { 
+      id: '3', 
+      client: { name: 'Global Inc' }, 
+      pickupTime: '14:15', 
+      status: 'SCHEDULED' as const 
+    },
   ];
 
   const getStatusColor = (status: string) => {
     const colors = {
-      scheduled: 'bg-yellow-100 text-yellow-800',
-      'in-progress': 'bg-blue-100 text-blue-800',
-      completed: 'bg-green-100 text-green-800',
+      SCHEDULED: 'bg-yellow-100 text-yellow-800',
+      IN_PROGRESS: 'bg-blue-100 text-blue-800',
+      COMPLETED: 'bg-green-100 text-green-800',
+      CANCELLED: 'bg-red-100 text-red-800',
     };
     return colors[status as keyof typeof colors] || 'bg-gray-100 text-gray-800';
   };
@@ -81,12 +97,12 @@ const Dashboard: React.FC = () => {
             >
               <div className="flex items-center space-x-4">
                 <span className="font-semibold text-gray-900 min-w-[60px]">
-                  {job.time}
+                  {job.pickupTime}
                 </span>
-                <span className="text-gray-700">{job.clientName}</span>
+                <span className="text-gray-700">{job.client.name}</span>
               </div>
               <span className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(job.status)}`}>
-                {job.status.replace('-', ' ')}
+                {job.status.replace('_', ' ').toLowerCase()}
               </span>
             </div>
           ))}

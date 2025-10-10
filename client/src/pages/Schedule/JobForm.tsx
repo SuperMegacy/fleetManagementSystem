@@ -11,7 +11,7 @@ const JobForm: React.FC<JobFormProps> = ({ onJobCreated }) => {
     clientName: '',
     pickupDate: '',
     pickupTime: '',
-    pickupLocations: '',
+    pickupLocation: '',
     dropOffLocation: ''
   });
 
@@ -42,7 +42,7 @@ const JobForm: React.FC<JobFormProps> = ({ onJobCreated }) => {
         clientName: '',
         pickupDate: '',
         pickupTime: '',
-        pickupLocations: '',
+        pickupLocation: '',
         dropOffLocation: ''
       });
 
@@ -58,7 +58,7 @@ const JobForm: React.FC<JobFormProps> = ({ onJobCreated }) => {
   const isFormValid = formData.clientName && 
                      formData.pickupDate && 
                      formData.pickupTime && 
-                     formData.pickupLocations && 
+                     formData.pickupLocation && 
                      formData.dropOffLocation;
 
   return (
@@ -150,8 +150,8 @@ const JobForm: React.FC<JobFormProps> = ({ onJobCreated }) => {
           <input
             type="text"
             id="pickupLocation"
-            value={formData.pickupLocations}
-            onChange={(e) => handleInputChange('pickupLocations', e.target.value)}
+            value={formData.pickupLocation}
+            onChange={(e) => handleInputChange('pickupLocation', e.target.value)}
             placeholder="Enter pickup address"
             className="input"
             required

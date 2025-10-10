@@ -11,7 +11,7 @@ const ScheduleView: React.FC = () => {
     new Date().toISOString().split('T')[0]
   );
 
-  const fetchSchedule = useCallback(async () => {
+ const fetchSchedule = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
@@ -28,12 +28,12 @@ const ScheduleView: React.FC = () => {
     fetchSchedule();
   }, [fetchSchedule]);
 
-  const getStatusColor = (status: string = 'scheduled') => {
+  const getStatusColor = (status: string = 'SCHEDULED') => {
     const colors = {
-      scheduled: 'bg-yellow-100 text-yellow-800 border-yellow-200',
-      'in-progress': 'bg-blue-100 text-blue-800 border-blue-200',
-      completed: 'bg-green-100 text-green-800 border-green-200',
-      cancelled: 'bg-red-100 text-red-800 border-red-200',
+      SCHEDULED: 'bg-yellow-100 text-yellow-800 border-yellow-200',
+      IN_PROGRESS: 'bg-blue-100 text-blue-800 border-blue-200',
+      COMPLETED: 'bg-green-100 text-green-800 border-green-200',
+      CANCELLED: 'bg-red-100 text-red-800 border-red-200',
     };
     return colors[status as keyof typeof colors] || 'bg-gray-100 text-gray-800 border-gray-200';
   };
@@ -124,10 +124,10 @@ const ScheduleView: React.FC = () => {
                 <div key={job.id} className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
                   <div className="flex justify-between items-start mb-3">
                     <h3 className="font-semibold text-gray-900 text-lg">
-                      {job.clientName}
+                      {job.client.name}
                     </h3>
                     <span className={`px-2 py-1 rounded-full text-xs font-medium border ${getStatusColor(job.status)}`}>
-                      {job.status || 'scheduled'}
+                      {job.status.toLowerCase()}
                     </span>
                   </div>
 
@@ -146,7 +146,13 @@ const ScheduleView: React.FC = () => {
                     </div>
                     <div className="flex justify-between">
                       <span className="text-gray-600 font-medium">Driver:</span>
-                      <span className="text-gray-900">{job.assignedDriver || 'Not assigned'}</span>
+                      <span className="text-gray-900">{job.driver?.name || 'Not assigned'}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600 font-medium">Vehicle:</span>
+                      <span className="text-gray-900">
+                        {job.vehicle ? `${job.vehicle.make} ${job.vehicle.model} (${job.vehicle.plate})` : 'Not assigned'}
+                      </span>
                     </div>
                   </div>
                 </div>
