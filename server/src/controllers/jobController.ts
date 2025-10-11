@@ -65,17 +65,6 @@ export const jobController = {
         }
     },
 
-        async updateJobStatus(req: Request, res: Response) {
-            try {
-                const { jobId } = req.params;
-                const { status } = req.body;
-                const updated = await JobModel.updateStatus(jobId, status);
-                res.json(updated);
-            } catch (error) {
-                res.status(500).json({ error: "Failed to update job status" });
-            }
-        },
-
         async assignDriver(req: Request, res: Response) {
             res.json({ message: "Driver assigned (mock)" });
         },
@@ -94,5 +83,34 @@ export const jobController = {
 
         async getClients(req: Request, res: Response) {
             res.json([{ id: 1, name: "Acme Corp" }]);
+        },
+
+
+        // Add to jobController object
+    async updateJobStatus(req: Request, res: Response): Promise<void | Response<any, Record<string, any>> | undefined> {
+        try {
+            const { jobId } = req.params;
+            const { status } = req.body;
+
+            if (!status || !['SCHEDULED', 'IN_PROGRESS', 'COMPLETED', 'CANCELLED'].includes(status)) {
+            return res.status(400).json({ 
+                error: 'Valid status is required: SCHEDULED, IN_PROGRESS, COMPLETED, or CANCELLED' 
+            });
+            }
+
+            const job = await JobModel.findById(jobId);
+            if (!job) {
+            return res.status(404).json({ 
+                error: 'Job not found' 
+            });
+            }
+
+            const updatedJob = await JobModel.updateStatus(jobId, status);
+            res.json(updatedJob);
+        } catch (error) {
+
+            console.error('Error updating job status:', error);
+            res.status(500).json({ error: 'Internal server error' });
         }
+    },
 }

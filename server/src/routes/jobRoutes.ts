@@ -8,7 +8,7 @@ router.get('/', jobController.getJobsByDate);
 router.post('/', jobController.createJob);
 router.get('/all', jobController.getAllJobs);
 router.get('/:jobId', jobController.getJobById);
-router.patch('/:jobId/status', jobController.updateJobStatus);
+router.patch('/:jobId/status', jobController.updateJobStatus); // Add this line
 router.patch('/:jobId/assign-driver', jobController.assignDriver);
 router.patch('/:jobId/assign-vehicle', jobController.assignVehicle);
 
